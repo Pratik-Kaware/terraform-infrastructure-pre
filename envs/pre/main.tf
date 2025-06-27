@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "networking" {
-    source  = "https://github.com/Pratik-Kaware/tf-modules/tree/main/networking"
+    source  = "git::https://github.com/Pratik-Kaware/tf-modules.git//networking"
     vpc_cidr    = var.vpc_cidr
     public_subnets  = var.azs
     environment = var.env
@@ -11,7 +11,7 @@ module "networking" {
 }
 
 module "compute" {
-    source  =   ""
+    source  =   "git::https://github.com/Pratik-Kaware/tf-modules.git//compute"
     instance_count  =   var.instance_count
     ami =   data.aws_ami.amazon_linux.id
     instance_type   =   var.instance_type
