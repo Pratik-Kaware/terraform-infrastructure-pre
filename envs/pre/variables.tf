@@ -1,5 +1,7 @@
 variable "region" {}
-variable "env" {}
+variable "environment" {
+    type = string
+}
 variable "vpc_cidr" {}
 variable "public_subnets"{
     type = list(string)
