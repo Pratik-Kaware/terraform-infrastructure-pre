@@ -34,7 +34,7 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: env/pre
+        working-directory: envs/pre
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
