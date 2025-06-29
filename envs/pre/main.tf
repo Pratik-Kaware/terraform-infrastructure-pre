@@ -15,7 +15,7 @@ module "security"{
     source  =   "git::https://github.com/Pratik-Kaware/tf-modules.git//security"
     vpc_id  =   module.networking.vpc_id
     environment = var.environment
-    tags    =   env.tags
+    tags    =   var.tags
 }
 module "compute" {
     source  =   "git::https://github.com/Pratik-Kaware/tf-modules.git//compute"
@@ -34,6 +34,6 @@ data "aws_ami" "amazon_linux"{
     owners  = ["amazon"]
     filter {
       name = "name"
-      values = ["myami-*"]
+      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
     }
 }
