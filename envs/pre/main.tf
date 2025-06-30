@@ -23,7 +23,6 @@ module "compute" {
     ami =   data.aws_ami.amazon_linux.id
     instance_type   =   var.instance_type
     subnet_ids  =   module.networking.public_subnets
-    key_pair_name   =   var.key_pair_name
     environment =   var.environment
     tags    =   var.tags
   
