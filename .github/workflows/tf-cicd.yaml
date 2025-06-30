@@ -51,12 +51,9 @@ jobs:
         with:
           name: tfplan
           path: envs/pre
-          
+
       - name: Show Plan
         run: terraform show -no-color tfplan
-        with:
-          name: tfplan
-          path: envs/pre
   
   terraform-apply:
     name: Terraform Apply (Manual Approval)
