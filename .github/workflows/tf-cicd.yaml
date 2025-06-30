@@ -43,11 +43,15 @@ jobs:
         run: terraform validate
         working-directory: envs/pre
 
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
           path: envs/pre
+          
       - name: Show Plan
         run: terraform show -no-color tfplan
         with:
