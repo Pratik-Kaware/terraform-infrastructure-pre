@@ -55,6 +55,7 @@ jobs:
 
       - name: Show Plan
         run: terraform show -no-color tfplan
+        working-directory: envs/pre
   
   terraform-apply:
     name: Terraform Apply (Manual Approval)
