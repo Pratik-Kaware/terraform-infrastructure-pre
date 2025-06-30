@@ -34,7 +34,7 @@ jobs:
         uses: actions/download-artifact@v4
         with: 
           name: tfplan
-          path: envs/pre
+          path: envs/pre/tfplan
 
       - name: Terraform Destroy 
         run : terraform destroy tfplan

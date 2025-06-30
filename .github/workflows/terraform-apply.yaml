@@ -26,7 +26,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan
-          path: envs/pre
+          path: envs/pre/tfplan
 
       - name: Terraform Init
         run: terraform init -backend-config="envs/pre/backend.conf"
