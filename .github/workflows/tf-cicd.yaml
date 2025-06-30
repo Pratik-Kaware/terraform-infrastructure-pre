@@ -59,7 +59,6 @@ jobs:
     name: Terraform Apply (Manual Approval)
     needs: terraform-plan
     runs-on: ubuntu-latest 
-    if: github.event_name == 'workflow_dispatch'
 
     environment:
       name: pre
@@ -99,7 +98,6 @@ jobs:
     name: Terraform Destroy (Manual Approval)
     needs: terraform-apply
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
 
     environment:
       name: pre
