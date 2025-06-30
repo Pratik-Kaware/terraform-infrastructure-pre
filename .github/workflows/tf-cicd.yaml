@@ -45,6 +45,7 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+        working-directory: envs/pre
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
