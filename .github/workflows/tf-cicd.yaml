@@ -16,8 +16,6 @@ jobs:
   terraform-plan:
     name: Terraform-Plan
     runs-on: ubuntu-latest
-    outputs:
-      plan-exists: ${{ steps.check-plan.outputs.exists }}
     
     steps:
       - name: Checout code
@@ -51,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: envs/pre
+          path: envs/pre/tfplan
 
       - name: Show Plan
         run: terraform show -no-color tfplan
@@ -88,13 +86,13 @@ jobs:
         working-directory: envs/pre
 
       - name: Download Plan Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/download-artifact@v4
         with: 
           name: tfplan
           path: envs/pre
 
       - name: Terraform Apply 
-        run : terraform apply tfplan
+        run: terraform apply tfplan
         working-directory: envs/pre
 
   terraform-destroy:
