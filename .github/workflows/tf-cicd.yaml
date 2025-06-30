@@ -3,13 +3,13 @@ on:
   push:
     paths:
       - 'terraform/**'
-      - '.github/workflows/terraformcicd.yaml'
+      - '.github/workflows/tf-cicd.yaml'
       - 'terraform.tfvars'
       - '**/userdata.sh'
   pull_request:
     paths:
       - 'terraform/**'
-      - '.github/workflows/terraformcicd.yaml'
+      - '.github/workflows/tf-cicd.yaml'
       - 'terraform.tfvars'
       - '**/userdata.sh'
 jobs:
