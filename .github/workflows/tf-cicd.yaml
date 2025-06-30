@@ -58,7 +58,8 @@ jobs:
   terraform-apply:
     name: Terraform Apply (Manual Approval)
     needs: terraform-plan
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'  
 
     environment:
       name: pre
@@ -98,22 +99,13 @@ jobs:
     name: Terraform Destroy (Manual Approval)
     needs: terraform-apply
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'  
 
     environment:
       name: pre
       url: https://console.aws.amazon.com/
 
     steps:
-
-      - name: Manual Approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.GH_TOKEN }}
-          approvers: Pratik-Kaware  
-          issue-title: 'Terraform Apply Approval'
-          issue-body: 'Please approve production apply.'
-          label: 'approved'
-
       - name: Checkout code
         uses: actions/checkout@v4
 
