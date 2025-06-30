@@ -1,6 +1,5 @@
 name: Terraform CICD
 on:
-  workflow_dispatch: 
   push:
     paths:
       - 'terraform/**'
@@ -51,6 +50,9 @@ jobs:
           path: envs/pre
       - name: Show Plan
         run: terraform show -no-color tfplan
+        with:
+          name: tfplan
+          path: envs/pre
   
   terraform-apply:
     name: Terraform Apply (Manual Approval)
