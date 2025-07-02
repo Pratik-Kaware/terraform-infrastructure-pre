@@ -4,7 +4,8 @@ This repository contains modular, scalable, and production-aligned **Terraform i
 
 ---
 
-## 📁 Project Structure
+<details> <summary>📁 Project Structure (copy-paste this in README)</summary>
+
 envs/pre/
 ├── con/                  # Terraform code and pipelines for 'con'
 ├── cor/                  # Terraform code and pipelines for 'cor'
@@ -14,6 +15,10 @@ envs/pre/
     ├── tf-reusable-plan.yaml
     ├── tf-reusable-apply.yaml
     └── tf-reusable-destroy.yaml
+
+</details>
+
+You can even collapse it using <details> if you want it cleaner.
 
 
 
