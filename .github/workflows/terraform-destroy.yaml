@@ -16,6 +16,9 @@ jobs:
         with:
           terraform_version: 1.6.0
 
+      - name: Check Files
+        run: ls -la envs/pre
+
       - name: Configure AWS creds 
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -30,7 +33,7 @@ jobs:
       - name: Terraform state list
         run: terraform state list
         working-directory: envs/pre
-        
+
       - name: Terraform Destroy 
         run : terraform destroy 
         working-directory: envs/pre
