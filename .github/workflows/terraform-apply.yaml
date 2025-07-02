@@ -27,7 +27,7 @@ jobs:
         working-directory: envs/pre
 
       - name: Terraform Init
-        run: terraform init -backend-config="envs/pre/backend.conf"
+        run: terraform init -backend-config="backend.conf"
         working-directory: envs/pre
 
       - name: Terraform Apply
