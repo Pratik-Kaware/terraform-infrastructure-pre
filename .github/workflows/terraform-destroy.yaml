@@ -30,12 +30,6 @@ jobs:
         run: terraform init -backend-config="envs/pre/backend.conf"
         working-directory: envs/pre
 
-      - name: Download Plan Artifact
-        uses: actions/download-artifact@v4
-        with: 
-          name: tfplan
-          path: envs/pre/tfplan
-
       - name: Terraform Destroy 
-        run : terraform destroy tfplan
+        run : terraform destroy 
         working-directory: envs/pre
