@@ -40,6 +40,10 @@ jobs:
         with:
           name: tfplan
           path: envs/pre/tfplan
+          retention-days: 1
+
+      - name: Show files in tfplan
+        run : ls -la envs/pre
 
       - name: Show Plan
         run: terraform show -no-color tfplan

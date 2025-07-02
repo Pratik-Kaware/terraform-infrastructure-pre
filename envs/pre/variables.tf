@@ -11,7 +11,6 @@ variable "azs"{
 }
 variable "instance_count" {}
 variable "instance_type" {}
-variable "key_pair_name" {}
 variable "tags" {
     type = map(string)
 }
