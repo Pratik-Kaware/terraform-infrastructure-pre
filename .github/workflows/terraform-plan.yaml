@@ -39,6 +39,10 @@ jobs:
         run: aws s3 cp tfplan s3://tfplan-github/pre/-${{ github.sha }}
         working-directory: envs/pre
 
+      - name: upload state to s3
+        run : aws s3 cp terraform.tfstate s3://tf-state-bucket-pre-26-6/pre/
+        working-directory: envs/pre
+
       - name: Show files in tfplan
         run : ls -la envs/pre
 
