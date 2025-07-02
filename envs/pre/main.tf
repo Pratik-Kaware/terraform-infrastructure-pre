@@ -1,9 +1,9 @@
 provider "aws" {
     region = var.region
 }
-# terraform {
-#   backend "s3" {}
-# }
+terraform {
+  backend "s3" {}
+}
 
 module "networking" {
     source  = "git::https://github.com/Pratik-Kaware/tf-modules.git//networking"
