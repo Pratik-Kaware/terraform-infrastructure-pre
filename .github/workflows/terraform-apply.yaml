@@ -23,10 +23,8 @@ jobs:
           aws-region: ap-south-1
 
       - name: Download Plan
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
-          path: envs/pre/
+        run: aws s3 cp s3://tfplan-github/pre/-${{ github.sha }} tfplan
+        working-directory: envs/pre
 
       - name: Terraform Init
         run: terraform init -backend-config="envs/pre/backend.conf"
