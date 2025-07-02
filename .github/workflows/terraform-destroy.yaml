@@ -27,6 +27,10 @@ jobs:
         run: terraform init -backend-config="envs/pre/backend.conf"
         working-directory: envs/pre
 
+      - name: Terraform state list
+        run: terraform state list
+        working-directory: envs/pre
+        
       - name: Terraform Destroy 
         run : terraform destroy 
         working-directory: envs/pre
