@@ -1,97 +1,79 @@
 # 🏗️ Terraform Infrastructure for Pre-Production Environments
 
-This repository contains modular, scalable, and production-aligned **Terraform infrastructure as code** for managing multiple pre-production environments (`con`, `cor`, etc.) on AWS.
+This repository contains modular, scalable, and production-aligned **Terraform infrastructure as code** for managing multiple pre-production projects (`con`, `cor`, etc.) on AWS using GitHub Actions.
 
 ---
 
 ## 📁 Project Structure
 
-```bash
 envs/pre/
-├── con/                  # Project-specific Terraform config and pipelines
-├── cor/
+├── con/ # Terraform code and pipelines for 'con'
+├── cor/ # Terraform code and pipelines for 'cor'
 ├── ...
 .github/
 └── workflows/
-    ├── tf-reusable-plan.yaml       # Reusable Terraform Plan workflow (in-progress)
-    ├── tf-reusable-apply.yaml      # Reusable Terraform Apply workflow (planned)
-    └── tf-reusable-destroy.yaml    # Reusable Terraform Destroy workflow (planned)
-'''
+├── tf-reusable-plan.yaml
+├── tf-reusable-apply.yaml
+└── tf-reusable-destroy.yaml
 
-Each project folder (e.g., con, cor) contains:
 
-    Terraform config (main.tf, variables.tf, terraform.tfvars)
+---
 
-    CI/CD workflows for plan, apply, and destroy
+## ⚙️ Tech Stack
 
-⚙️ Tech Stack
+- Terraform 1.6+
+- AWS (EC2, VPC, S3, IAM, etc.)
+- GitHub Actions for CI/CD
+- S3 as remote backend for Terraform state
+- Terraform modules (reusable via Git source)
+- (Optional) DynamoDB for state locking
 
-    Terraform 1.6+
+---
 
-    AWS (VPC, EC2, S3, IAM, etc.)
+## 🚀 CI/CD Pipelines
 
-    Terraform modules (reusable, versioned via Git)
+Each project (like `con`, `cor`) uses three pipelines:
 
-    GitHub Actions for CI/CD
+1. **Terraform Plan**  
+   - Triggered on `push`
+   - Generates and uploads a `.tfplan` file to S3
 
-    S3 as the remote state backend
+2. **Terraform Apply**  
+   - Manual (`workflow_dispatch`)
+   - Downloads the `.tfplan` from S3 and applies it
 
-    (Optional) DynamoDB for state locking
+3. **Terraform Destroy**  
+   - Manual (`workflow_dispatch`)
+   - Loads remote state and destroys resources
 
-🚀 CI/CD Pipelines
+---
 
-Each environment supports three GitHub Action workflows:
-1. Terraform Plan (auto on push)
+## ☁️ Remote State Configuration
 
-    Runs on every code change
+Terraform uses an S3 bucket for storing state:
 
-    Generates .tfplan file
 
-    Uploads .tfplan to S3
+bucket         = "tf-state-bucket-pre-26-6"
+key            = "pre/con/terraform.tfstate"
+region         = "ap-south-1"
+encrypt        = true
+# dynamodb_table = "terraform-locks" (optional)
+Use backend.conf in each project folder to configure the backend.
 
-2. Terraform Apply (manual)
 
-    Triggered via workflow_dispatch
+🧪 Troubleshooting Notes
+Problem	Cause	Solution
+terraform destroy says "no resources"	State exists but config missing	Ensure main.tf has actual resource blocks
+terraform init fails to read backend config	Incorrect relative path	Use backend.conf relative to working-directory
+terraform plan wants to recreate everything	Local state/config is out of sync	Use terraform import or refresh manually
+GitHub Action can't destroy resources	.tfstate not uploaded or missing	Ensure init uses backend and .tfstate is pushed to S3
+📦 Reusable Workflows (Planned)
 
-    Downloads .tfplan from S3 and applies it
+To avoid repeating plan, apply, and destroy logic, we’re introducing reusable workflows:
+Example
 
-3. Terraform Destroy (manual)
+Reusable Workflow File: .github/workflows/tf-reusable-plan.yaml
 
-    Triggered via workflow_dispatch
-
-    Uses remote state (S3) to destroy infrastructure
-
-☁️ Remote State Setup
-
-Terraform state is stored in an S3 bucket:
-
-bucket  = "tf-state-bucket-pre-26-6"
-key     = "pre/con/terraform.tfstate"
-region  = "ap-south-1"
-encrypt = true
-
-💡 Use the backend.conf in each folder to configure this.
-🧪 Troubleshooting Insights
-🔥 Common Pitfalls & Solutions
-Issue	Cause	Fix
-terraform destroy shows “no resources”	State file exists but config not present	Ensure actual resource blocks exist in main.tf
-terraform init fails to read backend config	Relative path issue	Use backend-config="backend.conf" if already in envs/pre/con
-terraform plan shows to recreate all	Local config out of sync with state	Use terraform import and validate state
-Destroy runs in CI can't find state	.tfstate not uploaded to S3	Use terraform init with backend to auto-load
-📦 Reusable Workflow Strategy (Planned)
-
-We are standardizing CI/CD via GitHub Reusable Workflows:
-✅ Benefits
-
-    DRY pipeline logic
-
-    Easy to onboard new projects
-
-    Parameterized folder support
-
-🛠 Structure (In Progress)
-
-# .github/workflows/tf-reusable-plan.yaml
 on:
   workflow_call:
     inputs:
@@ -99,51 +81,42 @@ on:
         required: true
         type: string
 
-Projects like envs/pre/con will invoke:
 
 jobs:
-  call-plan:
+  plan:
     uses: .github/workflows/tf-reusable-plan.yaml@main
     with:
       path: envs/pre/con
+🛣️ Roadmap
 
-📌 Roadmap
+Modular Terraform code for multiple projects
 
-Modular infrastructure using GitHub-hosted Terraform modules
+Remote backend with S3
 
-S3-based remote state per environment
+Project-specific pipelines (plan/apply/destroy)
 
-CI/CD for plan/apply/destroy using GitHub Actions
+GitHub Actions integration
 
-Terraform state recovery and import scripts
+State import and recovery support
 
-Reusable workflows for all environments
+Reusable workflows for all actions
 
-    Dynamically generated matrix jobs for all folders
+    Matrix-based dynamic environment deploys
 
-👨‍💻 Contributing
+🧑‍💻 How to Add a New Project
 
-To add a new project (e.g., net):
+    Copy an existing project folder (like con)
 
-    Clone envs/pre/con folder
+    Update backend.conf, main.tf, and terraform.tfvars
 
-    Update backend.conf and terraform.tfvars
+    Add new workflows or reuse existing ones
 
-    Add resource logic in main.tf
-
-    Create or reuse workflows
+    Push changes to trigger plan
 
 📞 Support
 
-For issues, raise a GitHub Issue or contact the DevOps Infra team.
-📜 License
-
-This project is licensed under the MIT License.
+Raise a GitHub issue or contact the DevOps team for help.
 
 
----
 
-Let me know if you'd like:
-- Automatically generated reusable workflows (`plan`, `apply`, `destroy`)
-- Custom badge support for workflows
-- A CONTRIBUTING.md with onboarding steps
+
