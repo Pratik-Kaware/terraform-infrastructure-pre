@@ -5,10 +5,7 @@ on:
     
 jobs:
   terraform-destroy:
-    name: Terraform Destroy (Manual Approval)
-    needs: terraform-apply
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'  
 
     steps:
       - name: Checkout code
