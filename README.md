@@ -3,9 +3,7 @@
 This repository contains modular, scalable, and production-aligned **Terraform infrastructure as code** for managing multiple pre-production projects (`con`, `cor`, etc.) on AWS using GitHub Actions.
 
 ---
-
-<details> <summary>📁 Project Structure (copy-paste this in README)</summary>
-
+📁 Project Structure
 envs/pre/
 ├── con/                  # Terraform code and pipelines for 'con'
 ├── cor/                  # Terraform code and pipelines for 'cor'
@@ -16,9 +14,6 @@ envs/pre/
     ├── tf-reusable-apply.yaml
     └── tf-reusable-destroy.yaml
 
-</details>
-
-You can even collapse it using <details> if you want it cleaner.
 
 
 
