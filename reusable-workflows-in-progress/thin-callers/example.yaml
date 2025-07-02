@@ -1,0 +1,12 @@
+name: Terraform Plan for project
+
+on:
+  push:
+    paths:
+      - 'envs/pre/<example>'
+
+jobs:
+  call-plan:
+    uses: .github/workflows/<reusable-plan>.yaml@main
+    with:
+      path: envs/pre/<example>
