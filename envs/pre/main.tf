@@ -31,6 +31,20 @@ module "compute" {
   
 }
 
+module "database"{
+    source  =   "git::https://github.com/Pratik-Kaware/tf-modules.git//database"
+    db_name = "mydb"
+    db_username = "admin"
+    db_password = var.db_password
+    db_instance_class = var.db_instance_class
+    allocated_storage = var.allocated_storage
+    subnet_ids  =   module.networking.private_subnets
+    vpc_security_group_ids = [module.security.db_sg_id]
+    environment = var.environment
+    tags    =   var.tags
+
+}
+
 data "aws_ami" "amazon_linux"{
     most_recent = true
     owners  = ["amazon"]

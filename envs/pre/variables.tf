@@ -14,4 +14,7 @@ variable "instance_type" {}
 variable "tags" {
     type = map(string)
 }
-
+variable "db_password" {
+    type = string
+    sensitive = true
+}
