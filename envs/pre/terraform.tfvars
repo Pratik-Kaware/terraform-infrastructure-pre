@@ -10,6 +10,9 @@ azs = [
 instance_count = 2
 instance_type = "t2.micro"
 
+db_instance_class = "db.t3.micro"
+allocated_storage = 20
+
 tags = {
   Project = "enterprise-startup"
   Owner = "devops"
